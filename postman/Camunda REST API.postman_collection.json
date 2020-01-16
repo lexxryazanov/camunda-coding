@@ -1,0 +1,324 @@
+{
+	"info": {
+		"_postman_id": "3b9e3403-65d8-4715-a199-e1996f3c4a1d",
+		"name": "Camunda REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "[Camunda] Get version",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest/version",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"version"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Camunda] Start process",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"variables\" : {}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/process-definition/key/taskDevelopmentProcess/start",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"process-definition",
+						"key",
+						"taskDevelopmentProcess",
+						"start"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Camunda] Get processes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"variables\" : {}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/process-instance/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"process-instance",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Camunda] Get tasks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"variables\" : {}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/task?processInstanceId=325e0772-387a-11ea-8028-00ff1e2e89b4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"task"
+					],
+					"query": [
+						{
+							"key": "processInstanceId",
+							"value": "325e0772-387a-11ea-8028-00ff1e2e89b4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Coding] Start new task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2af0130c-aec2-4a40-aff8-884d9160b552",
+						"exec": [
+							"taskId = pm.response.json().id;",
+							"pm.environment.set(\"taskId\", taskId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/coding/task?name=myCoolTask",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"coding",
+						"task"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "myCoolTask"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Coding] Get task by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/coding/task/{{taskId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"coding",
+						"task",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Coding] Analize task",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"note\": \"Some hopes and thoughts\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/coding/task/{{taskId}}/analyze",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"coding",
+						"task",
+						"{{taskId}}",
+						"analyze"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Coding] Implement task",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/coding/task/{{taskId}}/code",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"coding",
+						"task",
+						"{{taskId}}",
+						"code"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Coding] Test task",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"issuesCount\" : 0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/coding/task/{{taskId}}/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"coding",
+						"task",
+						"{{taskId}}",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Coding] Resolve conflicts",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"issuesCount\" : 0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/coding/task/{{taskId}}/resolve",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"coding",
+						"task",
+						"{{taskId}}",
+						"resolve"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
