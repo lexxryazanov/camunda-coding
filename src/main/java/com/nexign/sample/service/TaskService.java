@@ -113,6 +113,7 @@ public class TaskService {
     private Task getTaskWithStatus(Task task) {
         String processId = task2process.get(task.getId());
         List<String> tasks = camundaService.getCurrentTasks(processId);
+        task.setExpectedActions(tasks);
         if (tasks.isEmpty()) {
             task.setStatus(Status.DONE);
         } else {
